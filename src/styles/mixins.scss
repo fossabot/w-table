@@ -1,0 +1,17 @@
+@import './variables';
+
+@mixin column {
+    padding: 1em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+    display: inline-block;
+}
+
+@mixin row {
+    height: 3em;
+    display: inline-flex;
+    border-bottom: $border;
+    width: 100%;
+}

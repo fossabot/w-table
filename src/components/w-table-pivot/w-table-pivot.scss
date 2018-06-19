@@ -1,0 +1,19 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.pivot {
+    width: 100%;
+
+    .pivot-head {
+        background-color: #f7f7f7;
+        @include row;
+
+        > * {
+            @include column;
+        }
+    }
+
+    .pivot-rows {
+        
+    }
+}
