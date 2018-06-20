@@ -4,7 +4,7 @@
     position: sticky;
     top: 0;
     width: 100%;
-    background-color: #fff;
+    background-color: $background-color;
 }
 
 .header-row {
@@ -20,14 +20,15 @@
         padding: 1em;
 
         .ordering {
-            color: rgba(0,0,0,.2);
+            color: $border-color;
             display: inline-block;
             float: right;
             position: relative;
             top: -1.9em;
+            cursor: pointer;
 
             :hover {
-                color: rgba(0,0,0,.4);
+                color: $font-color;
             }
         }
     }

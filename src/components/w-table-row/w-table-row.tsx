@@ -13,6 +13,9 @@ export class WTableRow {
     @Prop()
     columns: Array<Column>;
 
+    @Prop()
+    isSelected: boolean;
+
     render(): JSX.Element {
         return (
             <div class="row">

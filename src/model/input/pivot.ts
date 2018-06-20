@@ -2,6 +2,10 @@ export class Pivot {
     element: (key: any, group: Array<any>) => JSX.Element | string;
     accessor?: (item) => any;
     /**
+     * groupEntry is (key: any, group: Array<any>)
+     */
+    ordering?: (groupEntry1, groupEntry2) => number;
+    /**
      * groupBy(items: Array<any>, accessor: (item) => any) {
      *      const grouped = new Map();
      *      items.forEach((item) => {

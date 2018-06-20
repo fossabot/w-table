@@ -3,7 +3,7 @@ import { Pivot } from '../../model/input/pivot';
 import { Column } from '../../model/input/column';
 import { Pagination } from '../../model/input/pagination';
 import { SelectedOrderingEvent } from '../../model/events/selected-ordering';
-import { RowService } from '../w-table-row/RowService';
+import { RowService } from '../w-table-row/w-row-service';
 
 @Component({
     tag: 'w-table',
@@ -101,6 +101,7 @@ export class WTable {
 
     @Listen('itemsPerPageChange')
     changeItemsPerPage(event: CustomEvent) {
+        //TODO shift to page containing similar first item than the current one.
         this.paginationMod = { ...this.paginationMod, startOfSelectIndex: parseInt(event.detail) };
         event.stopPropagation();
     }
@@ -117,13 +118,14 @@ export class WTable {
                             this.columns
                         )
                 }
-                <w-table-pager total={Math.ceil(this.itemsMod.length / this.getItemsPerPage())} pagination={this.pagination}></w-table-pager>
+                <w-table-pager total={Math.ceil(this.itemsMod.length / this.getItemsPerPage())} pagination={this.paginationMod}></w-table-pager>
             </div>
         );
     }
 
     pivotOutput(groups: Map<any, any>): Array<JSX.Element> {
         const groupedRows: Array<JSX.Element> = [];
+
         groups.forEach((groupItems: Array<any>, key: any) => {
             groupedRows.push(
                 <w-table-pivot key={key} groupItems={groupItems} columns={this.columns} currentOrdering={this.currentOrdering} pivot={this.pivot}></w-table-pivot>

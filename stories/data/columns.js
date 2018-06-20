@@ -1,5 +1,5 @@
 export const columns = [
-    {header: { title: "Title" }, width: 1, accessor: "title", ordering: {
+    {header: { title: "Title" }, width: 2, accessor: "title", ordering: {
         ascending: (one, two) => one.title === two.title ? 0 : one.title > two.title ? -1 : 1,
         descending: (one, two) => one.title === two.title ? 0 : one.title > two.title ? 1 : -1
     }},

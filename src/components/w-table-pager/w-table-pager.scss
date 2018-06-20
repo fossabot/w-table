@@ -4,20 +4,45 @@
     position: sticky;
     bottom: 0;
     height: 1.5em;
-    display: inline-flex;
     border-top: $border;
     width: calc(100% - 2em);
     background-color: #fff;
     padding: 1em;
-}
 
-input[type="number"] {
-    -webkit-appearance: textfield;
-    -moz-appearance: textfield;
-    appearance: textfield;
-}
+    .prev,
+    .next,
+    .pagenumber,
+    .steps {
+        display: inline;
+    }
 
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none;
+    .prev,
+    .next {
+       color: $border-color;
+    }
+
+    .prev:hover,
+    .next:hover {
+       color: $font-color-active;
+       cursor: pointer;
+    }
+
+    .steps {
+        float: right;
+    }
+
+    input[type="number"] {
+        -webkit-appearance: textfield;
+        -moz-appearance: textfield;
+        appearance: textfield;
+    }
+
+    input[type="number"]:invalid {
+        color: $warning-color;
+    }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none;
+    }
 }

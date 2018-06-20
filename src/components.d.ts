@@ -164,6 +164,7 @@ declare global {
   namespace StencilComponents {
     interface WTableRow {
       'columns': Array<Column>;
+      'isSelected': boolean;
       'item': any;
     }
   }
@@ -188,6 +189,7 @@ declare global {
   namespace JSXElements {
     export interface WTableRowAttributes extends HTMLAttributes {
       'columns'?: Array<Column>;
+      'isSelected'?: boolean;
       'item'?: any;
     }
   }

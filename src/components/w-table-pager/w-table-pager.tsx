@@ -22,24 +22,48 @@ export class WTablePager {
     render(): JSX.Element {
         return (
             <div class="pager">
-                <div class="prev"></div>
-                <input name="pagenumber" type="number" min="1" max={this.total} value={this.pagination.startOfPage + 1} onChange={(event: UIEvent) => this.selectPage(event)}></input>
-                / {this.total}
-                <div class="next"></div>
-                <select name="steps" onChange={(event: UIEvent) => this.changeAmount(event)}>
-                    {this.pagination.steps.map((option, i) => {
-                        return (<option value={i}>{option}</option>)
-                    })}
-                </select>
+                <div class="prev" onClick={() => this.prev()}>&#9664;</div>
+                <div class="pagenumber"><input name="pagenumber" type="number" min="1" max={this.total} value={this.pagination.startOfPage + 1} onChange={(event: UIEvent) => this.selectPage(event)}></input>
+                / {this.total}</div>
+                <div class="next" onClick={() => this.next()}>&#9654;</div>
+                <div class="steps">
+                    <select name="steps" onChange={(event: UIEvent) => this.changeAmount(event)}>
+                        {this.pagination.steps.map((option, i) => {
+                            return (<option value={i}>{option}</option>)
+                        })}
+                    </select>
+                </div>
             </div>
         );
     }
 
-    changeAmount(event: UIEvent) {
-        this.itemsPerPageChange.emit((event.target as HTMLSelectElement).value);
+    prev() {
+        this.pageChange.emit(
+            this.checkSelectedPageInRange(this.pagination.startOfPage - 1)
+        );
+    }
+
+    next() {
+        this.pageChange.emit(
+            this.checkSelectedPageInRange(this.pagination.startOfPage + 1)
+        );
     }
 
     selectPage(event: UIEvent) {
-        this.pageChange.emit(parseInt((event.target as HTMLInputElement).value) - 1);
+        this.pageChange.emit(
+            this.checkSelectedPageInRange(
+                parseInt((event.target as HTMLInputElement).value) - 1
+            )
+        );
+    }
+
+    private checkSelectedPageInRange(selectedPage: number): number {
+        let lowerEnd = selectedPage < 0 ? 0 : selectedPage;
+        let upperEnd = lowerEnd < this.total ? lowerEnd : this.total - 1;
+        return upperEnd;
+    }
+
+    changeAmount(event: UIEvent) {
+        this.itemsPerPageChange.emit((event.target as HTMLSelectElement).value);
     }
 }
