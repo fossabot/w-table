@@ -20,7 +20,7 @@ export class WTablePager {
     pageChange: EventEmitter;
 
     render(): JSX.Element {
-        return (
+        return this.pagination ? (
             <div class="pager">
                 <div class="prev" onClick={() => this.prev()}>&#9664;</div>
                 <div class="pagenumber"><input name="pagenumber" type="number" min="1" max={this.total} value={this.pagination.startOfPage + 1} onChange={(event: UIEvent) => this.selectPage(event)}></input>
@@ -34,7 +34,7 @@ export class WTablePager {
                     </select>
                 </div>
             </div>
-        );
+        ) : (<div class="pager"></div>);
     }
 
     prev() {

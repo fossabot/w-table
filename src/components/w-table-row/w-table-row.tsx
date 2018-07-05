@@ -20,11 +20,11 @@ export class WTableRow {
         return (
             <div class="row">
                 {
-                    this.columns.map((column: Column) => {
+                    this.columns && this.columns.map((column: Column) => {
                         let value = this.getCellValueForItem(this.item, column.accessor);
                         return (column.element
-                            ? <div class="column" style={{ flex: column.width.toString() }}>{column.element(value, this.item)}</div>
-                            : <div class="column" style={{ flex: column.width.toString() }}>{value}</div>)
+                            ? <div class="column" style={{ flex: (column.width ? column.width.toString() : "1") }}>{column.element(value, this.item)}</div>
+                            : <div class="column" style={{ flex: (column.width ? column.width.toString() : "1") }}>{value}</div>)
                     })
                 }
             </div>

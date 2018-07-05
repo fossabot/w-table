@@ -29,7 +29,7 @@ export class WTablePivot {
     isOpen: boolean;
 
     render(): JSX.Element {
-        let pivotHeadContent = this.pivot.element(this.key, this.groupItems);
+        let pivotHeadContent = this.pivot && this.pivot.element(this.key, this.groupItems);
         if (!(pivotHeadContent instanceof Element)) {
             pivotHeadContent = (<span>{pivotHeadContent}</span>);
         }

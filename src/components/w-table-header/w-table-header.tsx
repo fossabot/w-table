@@ -25,8 +25,8 @@ export class WTableHeader {
             <div class="header">
                 <div class="header-row">
                 {
-                    this.columns.map((column: Column) => {
-                            return (<div class="column" style={{ flex: column.width.toString() }}>
+                    this.columns && this.columns.map((column: Column) => {
+                        return (<div class="column" style={{ flex: column.width.toString() }}>
                             <div class="title">
                                 {column.header.element ? column.header.element(column.header) : column.header.title}
                             </div>

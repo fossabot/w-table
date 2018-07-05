@@ -4,6 +4,7 @@ import { Column } from '../../model/input/column';
 import { Pagination } from '../../model/input/pagination';
 import { SelectedOrderingEvent } from '../../model/events/selected-ordering';
 import { RowService } from '../w-table-row/w-row-service';
+import { PagingService } from '../w-table-pager/w-table-paging-service';
 
 @Component({
     tag: 'w-table',
@@ -61,7 +62,7 @@ export class WTable {
     @Watch('items')
     itemsChanged(newValue: Array<any>) {
         if (this.currentOrdering) {
-            this.itemsMod = newValue.sort(this.currentOrdering.ordering).map((item) => item);
+            this.itemsMod = this.itemsMod && newValue.sort(this.currentOrdering.ordering).map((item) => item);
         } else {
             this.itemsMod = newValue;
         }
@@ -79,7 +80,7 @@ export class WTable {
 
     componentWillLoad() {
         if (!this.itemsMod) {
-            this.itemsMod = this.items.map((item) => item);
+            this.itemsMod = this.items && this.items.map((item) => item);
         }
         if (!this.paginationMod) {
             this.paginationMod = this.pagination;
@@ -112,13 +113,13 @@ export class WTable {
                 <w-table-header columns={this.columns}></w-table-header>
                 {
                     this.groups
-                        ? this.pivotOutput(this.groups)
+                        ? this.pivotOutput(PagingService.getCurrentPageForGroup(this.paginationMod, this.groups))
                         : RowService.simpleRowOutput(
-                            this.itemsMod ? this.itemsMod.slice(this.getCurrentItemIndex(), this.getCurrentItemIndex() + this.getItemsPerPage()) : [],
+                            this.itemsMod ? this.itemsMod.slice(PagingService.getCurrentItemIndex(this.paginationMod), PagingService.getCurrentItemIndex(this.paginationMod) + PagingService.getItemsPerPage(this.paginationMod)) : [],
                             this.columns
                         )
                 }
-                <w-table-pager total={Math.ceil(this.itemsMod.length / this.getItemsPerPage())} pagination={this.paginationMod}></w-table-pager>
+                <w-table-pager total={this.itemsMod && Math.ceil(this.itemsMod.length / PagingService.getItemsPerPage(this.paginationMod))} pagination={this.paginationMod}></w-table-pager>
             </div>
         );
     }
@@ -140,13 +141,5 @@ export class WTable {
         } else {
             return undefined;
         }
-    }
-
-    private getItemsPerPage(): number {
-        return this.paginationMod && this.paginationMod.steps.length >= this.paginationMod.startOfSelectIndex && this.paginationMod.steps[this.paginationMod.startOfSelectIndex];
-    }
-
-    private getCurrentItemIndex(): number {
-        return this.paginationMod && this.paginationMod.startOfPage * this.getItemsPerPage();
     }
 }
